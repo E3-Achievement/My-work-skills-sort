@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Work Skills Sort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{
+  --bg:#F6F8FB; --surface:#FFFFFF; --fg:#14171A; --muted:#4A5260; --line:#C9D1DC;
+  --blue:#1F5FA8; --blue-t:#E3EEF9; --teal:#0E7C6B; --teal-t:#DDF2EE;
+  --orange:#B04A06; --orange-t:#FCEBDD; --purple:#6B3FA0; --purple-t:#EFE7F8;
+  --yes:#1F5FA8; --yes-t:#E3EEF9; --notyet:#B04A06; --notyet-t:#FCEBDD; --star:#9A6B00; --on:#FFFFFF;
+  --font:'Atkinson Hyperlegible', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#12161C; --surface:#1B2129; --fg:#EEF2F6; --muted:#AEB8C6; --line:#38424F;
+  --blue:#8DB8EA; --blue-t:#1D2D42; --teal:#6FD0BE; --teal-t:#15312C;
+  --orange:#F2A56E; --orange-t:#3A2516; --purple:#C3A6EC; --purple-t:#2C2140;
+  --yes:#8DB8EA; --yes-t:#1D2D42; --notyet:#F2A56E; --notyet-t:#3A2516; --star:#F1C44E; --on:#12161C; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);font-size:20px;line-height:1.45}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:28px 64px;display:flex;flex-direction:column;gap:28px}
+header{display:flex;flex-direction:column;gap:6px}
+.eyebrow{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{margin:0;font-size:clamp(32px,6vw,44px);line-height:1.1;text-wrap:balance}
+h2{margin:0;font-size:28px;line-height:1.15;text-wrap:balance}
+p{margin:0}
+.step{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:16px}
+.step-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.num{width:44px;height:44px;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;font-weight:700;font-size:22px;flex-shrink:0}
+.step-head h2{flex:1;min-width:0}
+.say{font:inherit;font-size:16px;font-weight:700;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:999px;border:2px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.say svg{width:20px;height:20px}
+.hint{color:var(--muted);font-size:18px}
+label.big{font-weight:700}
+input[type=text]{font:inherit;font-size:24px;width:100%;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--fg)}
+input:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{border:3px solid var(--c);border-radius:16px;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+.card-top{background:var(--ct);display:flex;align-items:center;gap:14px;padding:14px 16px}
+.card-top svg{width:52px;height:52px;flex-shrink:0;stroke:var(--c)}
+.card-top h3{margin:0;font-size:22px;line-height:1.15;text-wrap:balance}
+.card-body{padding:12px 16px 16px;display:flex;flex-direction:column;gap:12px;flex:1}
+.card-body p{font-size:17px;color:var(--muted);flex:1}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.choice button{font:inherit;font-size:17px;font-weight:700;min-height:52px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;padding:6px}
+.choice button[aria-pressed=true].yes{background:var(--yes);border-color:var(--yes);color:var(--on)}
+.choice button[aria-pressed=true].no{background:var(--notyet);border-color:var(--notyet);color:var(--on)}
+.count{font-weight:700}
+.tops{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.top{font:inherit;font-size:19px;font-weight:700;display:flex;align-items:center;gap:12px;min-height:60px;padding:10px 14px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;text-align:left}
+.top svg{width:28px;height:28px;flex-shrink:0;stroke:var(--star)}
+.top[aria-pressed=true]{border-color:var(--star);box-shadow:inset 0 0 0 2px var(--star)}
+.top[aria-pressed=true] svg{fill:var(--star)}
+.top:disabled{opacity:.45;cursor:not-allowed}
+.empty{border:2px dashed var(--line);border-radius:14px;padding:18px;color:var(--muted);text-align:center}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.sum-box{border-radius:14px;padding:14px 16px;background:var(--bg);border:2px solid var(--line)}
+.sum-box h3{margin:0 0 6px;font-size:17px;letter-spacing:.06em;text-transform:uppercase}
+.sum-box ul{margin:0;padding-left:22px}
+.sum-box.y h3{color:var(--yes)} .sum-box.n h3{color:var(--notyet)} .sum-box.s h3{color:var(--star)}
+.send-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{font:inherit;font-size:22px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:60px;padding:0 24px;border-radius:14px;border:2px solid var(--blue);background:var(--blue);color:var(--on);text-decoration:none;cursor:pointer}
+.btn.secondary{background:var(--surface);color:var(--fg);border-color:var(--line);font-size:18px;min-height:52px}
+.btn[aria-disabled=true]{opacity:.45;pointer-events:none}
+.notice{border-radius:14px;padding:14px 16px;background:var(--notyet-t);border:2px solid var(--notyet)}
+.okay{border-radius:14px;padding:14px 16px;background:var(--yes-t);border:2px solid var(--yes)}
+pre.msg{margin:0;white-space:pre-wrap;word-break:break-word;font:16px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:14px;max-height:280px;overflow:auto}
+details summary{cursor:pointer;min-height:44px;display:flex;align-items:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">E3 Achievement · Resume Week</div>
+    <h1>My Work Skills Sort</h1>
+    <p class="hint">Use your sort mat. Put each card here the same way you put it on your mat.</p>
+  </header>
+
+  <section class="step" aria-labelledby="s1">
+    <div class="step-head"><div class="num" aria-hidden="true">1</div><h2 id="s1">Type your name</h2>
+      <button class="say" type="button" data-say="Step 1. Type your first and last name in the box."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>Read to me</button></div>
+    <label class="big" for="studentName">First and last name</label>
+    <input type="text" id="studentName" autocomplete="off">
+  </section>
+
+  <section class="step" aria-labelledby="s2">
+    <div class="step-head"><div class="num" aria-hidden="true">2</div><h2 id="s2">Sort your cards</h2>
+      <button class="say" type="button" data-say="Step 2. Look at your sort mat. For each card, tap True for Me if you did it and can show proof. Tap Not Yet if you have not done it yet. Not yet is a goal, not a failure."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>Read to me</button></div>
+    <p class="hint">Tap <strong>True for Me</strong> if you did it and can show proof. Tap <strong>Not Yet</strong> if you have not done it yet.</p>
+    <p class="count" id="sortCount" aria-live="polite"></p>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="step" aria-labelledby="s3">
+    <div class="step-head"><div class="num" aria-hidden="true">3</div><h2 id="s3">Pick your top 4</h2>
+      <button class="say" type="button" data-say="Step 3. Tap the 4 True for Me skills you want on your resume. A star shows your pick."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>Read to me</button></div>
+    <p class="hint">These are the 4 skills going on your resume.</p>
+    <p class="count" id="topCount" aria-live="polite"></p>
+    <div id="topsWrap"></div>
+  </section>
+
+  <section class="step" aria-labelledby="s4">
+    <div class="step-head"><div class="num" aria-hidden="true">4</div><h2 id="s4">Check and send</h2>
+      <button class="say" type="button" data-say="Step 4. Check your list. Then tap Send my results in Gmail. Gmail opens with your message ready. Press the blue Send button in Gmail. Then tell staff you are done."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>Read to me</button></div>
+    <div class="summary" id="summary"></div>
+    <div id="sendState"></div>
+    <div class="send-row">
+      <a class="btn" id="gmailLink" href="#" target="_blank" rel="noopener" aria-disabled="true">Send my results in Gmail</a>
+      <a class="btn secondary" id="mailLink" href="#" aria-disabled="true">Other email app</a>
+      <button class="btn secondary" type="button" id="copyBtn">Copy message</button>
+      <button class="btn secondary" type="button" id="resetBtn">Next student</button>
+    </div>
+    <p class="hint">Gmail opens with your message ready. Press <strong>Send</strong> in Gmail, then tell staff you're done.</p>
+    <p class="hint" id="resetConfirm" hidden>Tap <strong>Yes, clear it</strong> to clear everything for the next student.</p>
+    <details>
+      <summary class="hint">See the message</summary>
+      <pre class="msg" id="msgPreview"></pre>
+    </details>
+  </section>
+</div>
+
+<script>
+(function(){
+  var RETURN_EMAIL = "burdettechris63@gmail.com";
+  var GROUP = "Monday Group";
+  var ICONS = {
+    press:'<rect x="10" y="12" width="28" height="7" rx="2"/><path d="M24 12V6M18 6h12"/><path d="M18 27c1.5-1.5 1.5-3 0-4.5M24 27c1.5-1.5 1.5-3 0-4.5M30 27c1.5-1.5 1.5-3 0-4.5"/><rect x="8" y="30" width="32" height="7" rx="2"/><path d="M13 37v5M35 37v5"/>',
+    shield:'<path d="M24 6l14 5v11c0 10-6 17-14 20-8-3-14-10-14-20V11z"/><path d="M17 24l5 5 9-10"/>',
+    lens:'<circle cx="21" cy="21" r="13"/><path d="M30.5 30.5L41 41"/><path d="M15 21l4 4 8-8"/>',
+    scissors:'<circle cx="12" cy="13" r="5"/><circle cx="12" cy="35" r="5"/><path d="M16 16l26 17M16 32L42 15"/>',
+    box:'<path d="M7 15l17-8 17 8v19l-17 8-17-8z"/><path d="M7 15l17 8 17-8M24 23v19"/><path d="M15.5 11l17 8"/>',
+    spray:'<path d="M17 19h13v21a2 2 0 0 1-2 2h-9a2 2 0 0 1-2-2z"/><path d="M20 19v-7h10l4 4"/><path d="M38 9l3-2M38 15h4M38 21l3 2"/>',
+    keys:'<rect x="4" y="14" width="40" height="22" rx="3"/><path d="M10 21h2M16 21h2M22 21h2M28 21h2M34 21h2M10 27h2M36 27h2M16 30h16"/>',
+    screen:'<rect x="5" y="7" width="38" height="27" rx="2"/><path d="M18 42h12M24 34v8"/><path d="M11 28l8-10 5 6 4-4 7 8z"/><circle cx="33" cy="14" r="2.5"/>',
+    mail:'<rect x="5" y="11" width="38" height="26" rx="2"/><path d="M5 13l19 14 19-14"/>',
+    person:'<circle cx="16" cy="19" r="6"/><path d="M5 41c0-7 5-11 11-11s11 4 11 11"/><path d="M28 7h15v11h-8l-4 4v-4h-3z"/>',
+    cash:'<rect x="4" y="13" width="40" height="22" rx="2"/><circle cx="24" cy="24" r="5"/><path d="M10 18v12M38 18v12"/>',
+    clip:'<rect x="10" y="8" width="28" height="35" rx="2"/><path d="M18 5h12v6H18z"/><path d="M15 21l2.5 2.5L22 19M26 21h7M15 32l2.5 2.5L22 30M26 32h7"/>'
+  };
+  var SKILLS = [
+    {id:'press',name:'Sublimation Pressing',cat:'blue',line:'Pressed custom mugs, shirts, and slates using a heat press.'},
+    {id:'shield',name:'Heat Press Safety',cat:'blue',line:'Followed safety rules and wore thermal gloves around hot equipment.'},
+    {id:'lens',name:'Quality Inspection',cat:'blue',line:'Checked products for mistakes before they were sold.'},
+    {id:'scissors',name:'Paper Trimming',cat:'blue',line:'Cut flyers and paper neatly using a paper trimmer.'},
+    {id:'box',name:'Packaging',cat:'blue',line:'Wrapped and packed products for customers.'},
+    {id:'spray',name:'Cleanup & Shutdown',cat:'purple',line:'Cleaned and reset my work area at the end of each day.'},
+    {id:'keys',name:'Data Entry',cat:'teal',line:'Typed product codes, names, and prices into a computer.'},
+    {id:'screen',name:'Graphic Design (Canva)',cat:'teal',line:'Made product designs and flyers on the computer.'},
+    {id:'mail',name:'Email',cat:'teal',line:'Sent professional emails with attachments.'},
+    {id:'person',name:'Customer Service',cat:'orange',line:'Greeted customers and wrote down their orders.'},
+    {id:'cash',name:'Cash Register / Money',cat:'orange',line:'Counted money and gave correct change.'},
+    {id:'clip',name:'Inventory Counting',cat:'orange',line:'Counted and recorded items in stock.'}
+  ];
+  var state = {sort:{}, top:[]};
+  function $(id){return document.getElementById(id);}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function byId(id){for(var i=0;i<SKILLS.length;i++){if(SKILLS[i].id===id)return SKILLS[i];}}
+  function trueList(){return SKILLS.filter(function(s){return state.sort[s.id]==='yes';});}
+  function notYetList(){return SKILLS.filter(function(s){return state.sort[s.id]==='no';});}
+  function today(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+
+  function renderCards(){
+    $('cards').innerHTML = SKILLS.map(function(s){
+      var v = state.sort[s.id];
+      return '<div class="card" style="--c:var(--'+s.cat+');--ct:var(--'+s.cat+'-t)">'+
+        '<div class="card-top"><svg viewBox="0 0 48 48" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICONS[s.id]+'</svg><h3>'+esc(s.name)+'</h3></div>'+
+        '<div class="card-body"><p>'+esc(s.line)+'</p>'+
+        '<div class="choice" role="group" aria-label="'+esc(s.name)+'">'+
+        '<button type="button" class="yes" data-id="'+s.id+'" data-v="yes" aria-pressed="'+(v==='yes')+'">True for Me</button>'+
+        '<button type="button" class="no" data-id="'+s.id+'" data-v="no" aria-pressed="'+(v==='no')+'">Not Yet</button>'+
+        '</div></div></div>';
+    }).join('');
+    $('sortCount').textContent = Object.keys(state.sort).length + ' of ' + SKILLS.length + ' cards sorted';
+  }
+
+  function renderTops(){
+    var t = trueList();
+    state.top = state.top.filter(function(id){return state.sort[id]==='yes';});
+    if(!t.length){ $('topsWrap').innerHTML = '<div class="empty">Your True for Me cards show up here.</div>'; }
+    else {
+      var full = state.top.length>=4;
+      $('topsWrap').innerHTML = '<div class="tops">'+t.map(function(s){
+        var on = state.top.indexOf(s.id)>-1;
+        return '<button type="button" class="top" data-top="'+s.id+'" aria-pressed="'+on+'"'+(full&&!on?' disabled':'')+'>'+
+          '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" fill="none" aria-hidden="true"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2 6.4 20.2l1.1-6.3L2.9 9.5l6.3-.9z"/></svg>'+
+          esc(s.name)+'</button>';
+      }).join('')+'</div>';
+    }
+    $('topCount').textContent = state.top.length + ' of 4 picked';
+  }
+
+  function buildMessage(){
+    var name = $('studentName').value.trim();
+    var tops = state.top.map(byId), yes = trueList(), no = notYetList();
+    var names = function(a){return a.map(function(s){return s.name;});};
+    var lines = [];
+    lines.push('Work Skills Sort for ' + (name||'[name]') + ' on ' + today() + (GROUP ? ' (' + GROUP + ')' : ''));
+    lines.push('');
+    lines.push('MY TOP 4 (for my resume):');
+    tops.forEach(function(s,i){lines.push((i+1)+'. '+s.name+' - '+s.line);});
+    lines.push('');
+    lines.push('TRUE FOR ME: ' + (names(yes).join(', ')||'none'));
+    lines.push('NOT YET: ' + (names(no).join(', ')||'none'));
+    lines.push('');
+    lines.push('DATA|'+today()+'|'+GROUP+'|'+name+'|'+names(tops).join('; ')+'|'+names(yes).join('; ')+'|'+names(no).join('; '));
+    return {subject:'E3 Work Skills Sort - '+(name||'Student')+' - '+today(), body:lines.join('\n')};
+  }
+
+  function renderSummary(){
+    var tops = state.top.map(byId), yes = trueList(), no = notYetList();
+    function list(arr){return arr.length?'<ul>'+arr.map(function(s){return '<li>'+esc(s.name)+'</li>';}).join('')+'</ul>':'<p class="hint">None yet</p>';}
+    $('summary').innerHTML =
+      '<div class="sum-box s"><h3>My top 4</h3>'+list(tops)+'</div>'+
+      '<div class="sum-box y"><h3>True for Me</h3>'+list(yes)+'</div>'+
+      '<div class="sum-box n"><h3>Not Yet</h3>'+list(no)+'</div>';
+    var missing = [];
+    if(!$('studentName').value.trim()) missing.push('type your name (step 1)');
+    if(Object.keys(state.sort).length < SKILLS.length) missing.push('sort every card (step 2)');
+    if(state.top.length !== 4) missing.push('pick 4 skills (step 3)');
+    var ready = !missing.length;
+    $('sendState').innerHTML = ready
+      ? '<div class="okay">Ready to send to <strong>'+esc(RETURN_EMAIL)+'</strong>.</div>'
+      : '<div class="notice">Before you send, '+esc(missing.join(', '))+'.</div>';
+    var m = buildMessage();
+    $('msgPreview').textContent = 'To: '+RETURN_EMAIL+'\nSubject: '+m.subject+'\n\n'+m.body;
+    var g = $('gmailLink'), ml = $('mailLink');
+    if(ready){
+      g.href = 'https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(RETURN_EMAIL)+'&su='+encodeURIComponent(m.subject)+'&body='+encodeURIComponent(m.body);
+      ml.href = 'mailto:'+encodeURIComponent(RETURN_EMAIL)+'?subject='+encodeURIComponent(m.subject)+'&body='+encodeURIComponent(m.body);
+      g.setAttribute('aria-disabled','false'); ml.setAttribute('aria-disabled','false');
+    } else {
+      g.href='#'; ml.href='#'; g.setAttribute('aria-disabled','true'); ml.setAttribute('aria-disabled','true');
+    }
+  }
+  function renderAll(){renderCards();renderTops();renderSummary();}
+
+  $('cards').addEventListener('click',function(e){
+    var b = e.target.closest('button[data-id]'); if(!b) return;
+    var id=b.getAttribute('data-id'), v=b.getAttribute('data-v');
+    if(state.sort[id]===v) delete state.sort[id]; else state.sort[id]=v;
+    renderAll();
+  });
+  $('topsWrap').addEventListener('click',function(e){
+    var b = e.target.closest('button[data-top]'); if(!b||b.disabled) return;
+    var id=b.getAttribute('data-top'), i=state.top.indexOf(id);
+    if(i>-1) state.top.splice(i,1); else if(state.top.length<4) state.top.push(id);
+    renderTops(); renderSummary();
+  });
+  $('studentName').addEventListener('input',renderSummary);
+  $('copyBtn').addEventListener('click',function(){
+    var btn=this, text=$('msgPreview').textContent;
+    function selectIt(){var d=$('msgPreview').closest('details'); d.open=true; var r=document.createRange(); r.selectNodeContents($('msgPreview')); var s=window.getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent='Selected. Press Ctrl+C';}
+    try{navigator.clipboard.writeText(text).then(function(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy message';},2000);},selectIt);}catch(e){selectIt();}
+  });
+  var armed=false;
+  $('resetBtn').addEventListener('click',function(){
+    if(!armed){armed=true;$('resetConfirm').hidden=false;this.textContent='Yes, clear it';return;}
+    armed=false;$('resetConfirm').hidden=true;this.textContent='Next student';
+    state={sort:{},top:[]}; $('studentName').value=''; renderAll(); window.scrollTo(0,0); $('studentName').focus();
+  });
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-say]'); if(!b) return;
+    try{var u=new SpeechSynthesisUtterance(b.getAttribute('data-say'));u.rate=0.9;speechSynthesis.cancel();speechSynthesis.speak(u);}catch(err){}
+  });
+  renderAll();
+})();
+</script>
+</body>
+</html>
